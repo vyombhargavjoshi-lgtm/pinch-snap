@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pinch & Snap</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand" aria-label="Pinch and Snap">
+        <svg viewBox="0 0 40 40" aria-hidden="true">
+          <rect x="6.5" y="6.5" width="27" height="27" rx="8"></rect>
+          <path d="M13 17v-3h3M24 14h3v3M27 23v3h-3M16 26h-3v-3"></path>
+          <circle cx="20" cy="20" r="3.2"></circle>
+        </svg>
+      </div>
+      <div class="top-actions">
+        <button id="profileBtn" class="avatar" aria-label="Local library info" title="Local library">P</button>
+        <span class="divider"></span>
+        <button id="settingsBtn" class="icon-btn" aria-label="Settings" title="Settings">
+          <svg viewBox="0 0 24 24"><path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"/><path d="m19.4 13.5 1.1.9-1.6 2.8-1.4-.5a7.8 7.8 0 0 1-1.7 1l-.2 1.5h-3.2l-.3-1.5a7.8 7.8 0 0 1-1.7-1l-1.4.5-1.6-2.8 1.1-.9a7.4 7.4 0 0 1 0-2l-1.1-.9 1.6-2.8 1.4.5a7.8 7.8 0 0 1 1.7-1l.3-1.5h3.2l.2 1.5a7.8 7.8 0 0 1 1.7 1l1.4-.5 1.6 2.8-1.1.9a7.4 7.4 0 0 1 0 2Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section id="homeView">
+      <div class="hero-grid">
+        <button class="tool-card pinch-card" id="pinchBtn">
+          <span class="card-art pinch-art"><span class="gridline"></span><span class="app-icon blue-icon"><svg viewBox="0 0 24 24"><path d="M7 3h4v4H7zM13 3h4v4h-4zM7 9h4v4H7zM13 9h4v4h-4z" transform="rotate(45 12 8)"/></svg></span></span>
+          <span class="tool-name">Pinch</span>
+          <span class="tool-sub">CSS Juice</span>
+          <span class="card-hint">Inspect elements</span>
+        </button>
+        <button class="tool-card snap-card" id="snapBtn" aria-label="Capture screenshot with Snap">
+          <span class="card-art snap-art"><span class="corners"></span><span class="app-icon pink-icon"><svg viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5Zm8 1.7a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"/></svg></span></span>
+          <span class="tool-name">Snap</span>
+          <span class="tool-sub">Screenshot</span>
+          <span class="card-hint">Capture this page</span>
+        </button>
+      </div>
+
+      <label class="field-label" for="pocketSelect">SAVE TO</label>
+      <div class="select-wrap">
+        <select id="pocketSelect" aria-label="Save to pocket">
+          <option value="Unsorted">Unsorted</option>
+          <option value="UI Inspiration">UI Inspiration</option>
+          <option value="Projects">Projects</option>
+          <option value="Bug Reports">Bug Reports</option>
+          <option value="Read Later">Read Later</option>
+        </select>
+        <span class="chevron">⌄</span>
+      </div>
+
+      <div class="instant-row">
+        <div class="instant-label"><span>Instant Pinch</span><small>Activate inspector with one click</small></div>
+        <button id="instantToggle" class="toggle" role="switch" aria-checked="false" aria-label="Instant Pinch"><span></span></button>
+      </div>
+
+      <div class="quick-actions">
+        <button id="savePageBtn" class="secondary-btn"><span>＋</span> Save current page</button>
+        <button id="viewPocketsBtn" class="primary-btn">View Pockets <span class="arrow">↗</span></button>
+      </div>
+      <div class="status" id="status" role="status"></div>
+      <footer><span class="status-dot"></span> Stored locally on this device</footer>
+    </section>
+
+    <section id="pocketsView" class="hidden">
+      <div class="view-heading"><button class="back-btn" id="backHome">←</button><div><h1>Pockets</h1><p>Your saved bits of the web.</p></div><button class="round-add" id="addPocketBtn" title="New pocket">＋</button></div>
+      <div class="searchbox"><span>⌕</span><input id="searchInput" placeholder="Search saved items..." autocomplete="off"><kbd>⌘ K</kbd></div>
+      <div class="filter-row" id="filterRow">
+        <button class="filter active" data-filter="All">All</button>
+        <button class="filter" data-filter="Page">Pages</button>
+        <button class="filter" data-filter="CSS">CSS</button>
+        <button class="filter" data-filter="Screenshot">Screenshots</button>
+      </div>
+      <div class="pocket-list" id="pocketList"></div>
+      <div class="pocket-bottom"><span id="itemCount">0 items</span><button id="exportBtn" class="text-btn">Export library ↗</button></div>
+    </section>
+
+    <section id="settingsView" class="hidden">
+      <div class="view-heading"><button class="back-btn" id="backSettings">←</button><div><h1>Settings</h1><p>Make it yours.</p></div></div>
+      <div class="settings-group">
+        <div class="setting-item"><div><strong>Instant Pinch</strong><p>Start inspecting when the extension opens.</p></div><button id="settingsInstantToggle" class="toggle" role="switch" aria-checked="false"><span></span></button></div>
+        <div class="setting-item"><div><strong>Save screenshots automatically</strong><p>Download each Snap capture as a PNG.</p></div><button id="autoDownloadToggle" class="toggle" role="switch" aria-checked="true"><span></span></button></div>
+        <div class="setting-item"><div><strong>Default pocket</strong><p>Where new items are saved.</p></div><select id="defaultPocket"><option>Unsorted</option><option>UI Inspiration</option><option>Projects</option><option>Bug Reports</option><option>Read Later</option></select></div>
+      </div>
+      <div class="shortcut-card"><span class="shortcut-icon">⌘</span><div><strong>Keyboard shortcuts</strong><p>Pinch <kbd>Alt</kbd> <kbd>⇧</kbd> <kbd>P</kbd> <span>·</span> Snap <kbd>Alt</kbd> <kbd>⇧</kbd> <kbd>S</kbd></p><small>Customize at chrome://extensions/shortcuts</small></div></div>
+      <button id="clearDataBtn" class="danger-btn">Clear all local data</button>
+      <p class="settings-note">Pinch & Snap doesn't send your saved content anywhere. Your library stays on this device.</p>
+    </section>
+
+    <section id="inspectView" class="hidden">
+      <div class="view-heading"><button class="back-btn" id="backInspect">←</button><div><h1>Pinch is ready</h1><p>Choose an element on the page.</p></div></div>
+      <div class="inspect-instructions"><div class="target-icon">⌖</div><h2>Click anything</h2><p>Hover to highlight an element, then click to inspect its styles. Press <kbd>Esc</kbd> to exit.</p><div class="inspect-pills"><span>Colors</span><span>Spacing</span><span>Typography</span><span>Dimensions</span></div></div>
+      <button class="primary-btn full" id="startInspectBtn">Start inspecting</button>
+    </section>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

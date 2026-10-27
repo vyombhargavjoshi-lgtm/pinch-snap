@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Pinch & Snap \u2014 Hybrid X-Ray",
+  "version": "1.1.0",
+  "description": "Monochrome web X-Ray inspector with layout, spacing, component diagnostics and temporary CSS previews.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads",
+    "contextMenus"
+  ],
+  "host_permissions": [],
+  "action": {
+    "default_title": "Pinch & Snap",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "activate-pinch": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Activate Pinch element inspector"
+    },
+    "capture-snap": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Capture the visible tab"
+    }
+  }
+}

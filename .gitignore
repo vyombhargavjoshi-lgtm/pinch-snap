@@ -1,0 +1,24 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Logs and temporary files
+*.log
+npm-debug.log*
+tmp/
+temp/
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Build and archive outputs
+dist/
+build/
+*.zip
